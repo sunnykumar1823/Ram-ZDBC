@@ -15,8 +15,7 @@ public class EmployeeRunner {
 		// Persistant object
 		Employee emp = new Employee(12, "ritul", "Male", 68000);
 
-//		
-
+		edao.printAllEmps();
 		System.out.println("Query execute ..........");
 
 	}

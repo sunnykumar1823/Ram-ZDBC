@@ -7,18 +7,18 @@ import com.ram.entity.Employee;
 
 public interface EmployeeDao {
 
-	public void saveEmp(Employee e)
+	public void saveEmp(Employee e);
 
-	public void updateEmp(Employee e) throws SQLException
+	public void updateEmp(Employee e) throws SQLException;
 
 	public void deleteEmpById(int id) throws SQLException;
 
-	public Employee getEmpById(int id);
+	public Employee getEmpById(int id) throws SQLException;
 
-	public Employee getEmpByName(String name);
+	public Employee getEmpByName(String name) throws SQLException;
 
-	public List<Employee> getAllEmps();
+	public List<Employee> getAllEmps() throws SQLException;
 
-	public void printAllEmps();
+	public void printAllEmps() throws SQLException;
 
 }
