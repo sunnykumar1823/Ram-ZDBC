@@ -23,4 +23,6 @@ public interface EmployeeDao {
 
 	public void printAllEmpsByPS() throws SQLException;
 
+	public void batchUpdates() throws SQLException;
+
 }

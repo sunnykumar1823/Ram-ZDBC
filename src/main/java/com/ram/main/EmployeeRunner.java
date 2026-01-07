@@ -34,25 +34,9 @@ public class EmployeeRunner {
 //					+ "\t SALARY = " + e.getSalary());
 //		}
 
-		edao.printAllEmpsByPS();
-		// Persistant object
-//		Employee emp = new Employee(12, "ritul", "Male", 68000);
+//		edao.printAllEmpsByPS();
 
-//		edao.printAllEmps();
-//		
-//		System.out.println(edao.getEmpById(12));
-//		
-//		System.out.println(edao.getEmpByName("ram"));
-		// get all employees
-//		List<Employee> list = edao.getAllEmps();
-//
-//		for (Employee e : list) {
-//			System.out.println("ID = " + e.getId() + ", NAME = " + e.getName() + ", GENDER = " + e.getGender()
-//					+ ", SALARY = " + e.getSalary());
-//		}
-
-//		edao.printEmpByName("sunny");
-//		edao.printEmpByName("sunny 'or' 1=1");
+		edao.batchUpdates();
 
 		System.out.println("Query execute ..........");
 

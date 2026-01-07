@@ -167,4 +167,26 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 	}
 
+	@Override
+	public void batchUpdates() throws SQLException {
+		try (PreparedStatement ps = connection
+				.prepareStatement("INSERT INTO EMPLOYEE (ID,NAME,GENDER,SALARY) VALUES(?, ?,?,?)")) {
+			connection.setAutoCommit(false);
+
+			for (int i = 1; i <= 100; i++) {
+				ps.setInt(1, 12 + i);
+				ps.setString(2, "Guest-" + i);
+				ps.setString(3, "Male");
+				ps.setInt(4, 50000);
+				ps.addBatch();
+			}
+			ps.executeBatch();
+			connection.commit();
+
+		} catch (SQLException e1) {
+			connection.rollback();
+			e1.printStackTrace();
+		}
+	}
+
 }
