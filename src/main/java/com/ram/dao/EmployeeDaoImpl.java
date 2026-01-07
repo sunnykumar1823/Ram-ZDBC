@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.ram.entity.Employee;
@@ -15,6 +16,9 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	private static final String UPDATE_QUERY = "UPDATE EMPLOYEE SET NAME = '%s',GENDER = '%s',SALARY = %d WHERE ID = %d";
 	private static final String DELETE_QUERY = "DELETE FROM EMPLOYEE WHERE ID = %d";
 	private static final String SELECT_QUERY = "SELECT * FROM EMPLOYEE";
+	private static final String SELECT_BY_ID = "SELECT * FROM EMPLOYEE WHERE ID = %d";
+	private static final String SELECT_BY_NAME = "SELECT * FROM EMPLOYEE WHERE NAME = '%s'";
+//	private static final String SELECT_BY_NAME = "SELECT * FROM EMPLOYEE WHERE NAME = 'ram' or '1=1'";
 
 	static Connection connection = null;
 	static {
@@ -59,21 +63,74 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	}
 
 	@Override
-	public Employee getEmpById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Employee getEmpById(int id) throws SQLException {
+		Statement statement = connection.createStatement();
+		ResultSet resultSet = statement.executeQuery(String.format(SELECT_BY_ID, id));
+		resultSet.next();
+
+		Employee e = new Employee();
+
+		e.setId(resultSet.getInt(1));
+		e.setName(resultSet.getString(2));
+		e.setGender(resultSet.getString(3));
+		e.setSalary(resultSet.getInt(4));
+
+		System.err.println(String.format(SELECT_BY_ID, id));
+
+		return e;
 	}
 
 	@Override
-	public Employee getEmpByName(String name) {
-		// TODO Auto-generated method stub
-		return null;
+	public Employee getEmpByName(String name) throws SQLException {
+		Statement statement = connection.createStatement();
+		ResultSet resultSet = statement.executeQuery(String.format(SELECT_BY_NAME, name));
+		Employee e = null;
+		if (resultSet.next()) {
+
+			e = new Employee();
+
+			e.setId(resultSet.getInt(1));
+			e.setName(resultSet.getString(2));
+			e.setGender(resultSet.getString(3));
+			e.setSalary(resultSet.getInt(4));
+		}
+
+		System.err.println(String.format(SELECT_BY_NAME, name));
+
+		return e;
 	}
 
 	@Override
-	public List<Employee> getAllEmps() {
-		// TODO Auto-generated method stub
-		return null;
+	public void printEmpByName(String name) throws SQLException {
+		Statement statement = connection.createStatement();
+		ResultSet resultSet = statement.executeQuery(String.format(SELECT_BY_NAME, name));
+
+		while (resultSet.next()) {
+			System.out.println("ID = " + resultSet.getInt(1) + "\t NAME = " + resultSet.getString(2) + "\t GENDER = "
+					+ resultSet.getString(3) + "\t SALARY = " + resultSet.getInt(4));
+		}
+		System.err.println(String.format(SELECT_BY_NAME, name));
+
+	}
+
+	@Override
+	public List<Employee> getAllEmps() throws SQLException {
+		List<Employee> list = new ArrayList<Employee>();
+
+		Statement statement = connection.createStatement();
+		ResultSet resultSet = statement.executeQuery(SELECT_QUERY);
+
+		while (resultSet.next()) {
+			Employee e = new Employee();
+
+			e.setId(resultSet.getInt(1));
+			e.setName(resultSet.getString(2));
+			e.setGender(resultSet.getString(3));
+			e.setSalary(resultSet.getInt(4));
+
+			list.add(e);
+		}
+		return list;
 	}
 
 	@Override
